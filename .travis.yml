@@ -1,0 +1,20 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - export BUILD_ID=${TRAVIS_COMMIT::8}
+  - export BASE_REPO=linagora/janus-gateway
+  - export HUB_REPO=linagora/janus-gateway
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG ; fi`
+  - docker build -t $BASE_REPO:$BUILD_ID .
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker tag $BASE_REPO:$BUILD_ID $BASE_REPO:$TAG
+  - docker push $BASE_REPO:$TAG
+  - docker build -t $HUB_REPO:$BUILD_ID .
+  - docker tag $HUB_REPO:$BUILD_ID $HUB_REPO:$TAG
+  - docker push $HUB_REPO:$TAG
+
+script:
+  - docker images
