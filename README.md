@@ -9,11 +9,13 @@ Run janus gateway well configured for Hublin in a Docker container.
 Assuming Docker and Docker Compose are installed:
 
 Build the image
+
 ```shell
 $ docker build -t linagora/janus-gateway .
 ```
 
 Run the container
+
 ```shell
 $ docker run -p 80:80 -p 7088:7088 -p 8088:8088 -p 8188:8188 linagora/janus-gateway
 ```
@@ -33,3 +35,4 @@ Where ports:
   - **7088**: expose Admin/monitor server
   - **8088**: expose Janus server
   - **8188**: expose Websocket server
+
